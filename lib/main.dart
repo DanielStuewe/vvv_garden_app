@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.green, useMaterial3: true),
       home: Provider(
-        create: (context) => PlantService()..init(),
+        create: (context) => PlantService(),
         child: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );

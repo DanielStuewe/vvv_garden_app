@@ -1,16 +1,30 @@
-import '../models/plant_model.dart';
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter/foundation.dart';
+
+import '../models/plant.dart';
 
 class PlantService {
-  List<Plant> _plants = [];
-  bool isInit = false;
+  Future<List<Plant?>> queryListItems() async {
+    await Amplify.asyncConfig;
 
-  List<Plant> get plants => _plants;
+    try {
+      debugPrint("Request plants...");
+      final response = await Amplify.API.query(
+          request: ModelQueries.list(Plant.classType)
+      ).response;
 
-  void init() {
-    _plants = [
-      Plant(name: 'Rose', isWatered: false),
-      Plant(name: 'Cactus', isWatered: true),
-    ];
-    isInit = true;
+      debugPrint("Receive plants...");
+
+      final plants = response.data?.items;
+      if (plants == null) {
+        safePrint('errors: ${response.errors}');
+        return const [];
+      }
+      return plants;
+    } on ApiException catch (e) {
+      safePrint('Query failed: $e');
+      return const [];
+    }
   }
 }

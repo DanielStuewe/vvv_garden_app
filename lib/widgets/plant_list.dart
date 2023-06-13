@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:garden_test/models/plant.dart';
 import 'package:garden_test/services/plant_service.dart';
 import 'package:provider/provider.dart';
 
 class PlantList extends StatelessWidget {
-  PlantList({super.key});
-
-  final plants = ['Rose', 'Gurke', 'Chili', 'Sonnenblume'];
+  const PlantList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> tileList = <Widget>[];
-    final plants2 = Provider.of<PlantService>(context).plants;
-
-    for (final plant in plants) {
-      tileList.add(
-        ListTile(
-          title: Text(plant),
-          leading: const Icon(Icons.abc),
-        ),
-      );
-    }
+    final plantService = Provider.of<PlantService>(context);
 
     return SizedBox(
-      height: 400,
-      child: ListView.builder(
-        itemBuilder: (context, index) => ListTile(
-          title: Text(plants2[index].name),
-          leading: Icon(plants2[index].isWatered ? Icons.water_drop : Icons.water_drop_outlined),
-        ),
-        itemCount: plants2.length,
-      ),
-    );
+        height: 300,
+        child: FutureBuilder(
+            future: plantService.queryListItems(),
+            initialData: const <Plant?>[],
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Plant?>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text("Lade Pflanzen");
+              }
+              return ListView(children: [
+                for (var plant in (snapshot.data ?? []))
+                  ListTile(title: Text(plant.name))
+              ]);
+            }));
   }
 }
