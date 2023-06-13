@@ -1,0 +1,12 @@
+type Refund @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  amount: Float
+  employeeID: ID! @index(name: "byEmployee")
+}
+
+type Employee @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  first_name: String
+  last_name: String
+  determine: [Refund] @hasMany(indexName: "byEmployee", fields: ["id"])
+}
