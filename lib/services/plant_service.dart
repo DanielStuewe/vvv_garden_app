@@ -1,10 +1,21 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/foundation.dart';
+import 'package:garden_test/models/Bucket.dart';
+import 'package:garden_test/models/BucketPlant.dart';
 
-import '../models/plant.dart';
+import '../models/Plant.dart';
 
 class PlantService {
+  // List<Plant> mockPlants = [
+  //   Plant(
+  //       id: '1',
+  //       name: 'Lisa',
+  //       description: 'Lisa is a very thirsty plant!',
+  //       dateOfPlanting: TemporalDate(DateTime(2023)),
+  //       buckets: [],
+  //   )
+  // ];
   Future<List<Plant?>> queryListItems() async {
     await Amplify.asyncConfig;
 
@@ -20,18 +31,23 @@ class PlantService {
         id
         description
         irrigationFrequencyInDays
+        createdAt
+        bloomMonths
+        edible
+        species
       }
     }
   }
 }''';
-      final response = await Amplify.API.query(
-          request: GraphQLRequest<PaginatedResult<Plant>>(
-            document: graphQLDocument,
-            modelType: const PaginatedModelType(Plant.classType),
-            decodePath: "listPlants"
-          )
-        // ModelQueries.list(Plant.classType)
-      ).response;
+      final response = await Amplify.API
+          .query(
+              request: GraphQLRequest<PaginatedResult<Plant>>(
+                  document: graphQLDocument,
+                  modelType: const PaginatedModelType(Plant.classType),
+                  decodePath: "listPlants")
+              // ModelQueries.list(Plant.classType)
+              )
+          .response;
 
       debugPrint("Receive plants...");
 

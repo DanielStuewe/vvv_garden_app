@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'amplifyconfiguration.dart';
 import 'models/ModelProvider.dart';
-import 'pages/home/home.dart';
+import 'pages/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,11 +42,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'BotaniComm',
       theme: ThemeData(primarySwatch: Colors.green, useMaterial3: true),
       home: Provider(
         create: (context) => PlantService(),
-        child: const MyHomePage(title: 'Flutter Demo Home Page'),
+        child: const MyHomePage(title: 'BotaniComm'),
       ),
     );
   }

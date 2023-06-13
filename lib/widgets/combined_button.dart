@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garden_test/widgets/plant_list.dart';
 
 class CombindedButton extends StatelessWidget {
   final String text;
@@ -20,17 +21,22 @@ class CombindedButton extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) {
               return Scaffold(
-                appBar: AppBar(
-                  title: const Text('test'),
-                  leading: IconButton(
-                    icon: const Icon(Icons.back_hand),
-                    onPressed: () => Navigator.of(context).pop(),
+                  appBar: AppBar(
+                    title: const Text('Our Plants'),
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                   ),
-                ),
-                body: const Center(
-                  child: Text('Hey'),
-                ),
-              );
+                  body: const Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(left: 60, right: 8),
+                            child: PlantList())
+                      ],
+                    ),
+                  ));
             },
           ),
         );
