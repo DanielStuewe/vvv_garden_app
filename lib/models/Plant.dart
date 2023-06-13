@@ -19,17 +19,21 @@
 
 // ignore_for_file: public_member_api_docs, annotate_overrides, dead_code, dead_codepublic_member_api_docs, depend_on_referenced_packages, file_names, library_private_types_in_public_api, no_leading_underscores_for_library_prefixes, no_leading_underscores_for_local_identifiers, non_constant_identifier_names, null_check_on_nullable_type_parameter, prefer_adjacent_string_concatenation, prefer_const_constructors, prefer_if_null_operators, prefer_interpolation_to_compose_strings, slash_for_doc_comments, sort_child_properties_last, unnecessary_const, unnecessary_constructor_name, unnecessary_late, unnecessary_new, unnecessary_null_aware_assignments, unnecessary_nullable_for_final_variable_declarations, unnecessary_string_interpolations, use_build_context_synchronously
 
+import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the Refund type in your schema. */
+/** This is an auto generated class representing the Plant type in your schema. */
 @immutable
-class Refund extends Model {
-  static const classType = const _RefundModelType();
+class Plant extends Model {
+  static const classType = const _PlantModelType();
   final String id;
-  final double? _amount;
-  final String? _employeeID;
+  final String? _name;
+  final String? _description;
+  final TemporalDate? _dateOfPlanting;
+  final List<BucketPlant>? _buckets;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -40,19 +44,15 @@ class Refund extends Model {
   @override
   String getId() => id;
   
-  RefundModelIdentifier get modelIdentifier {
-      return RefundModelIdentifier(
+  PlantModelIdentifier get modelIdentifier {
+      return PlantModelIdentifier(
         id: id
       );
   }
   
-  double? get amount {
-    return _amount;
-  }
-  
-  String get employeeID {
+  String get name {
     try {
-      return _employeeID!;
+      return _name!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -63,6 +63,18 @@ class Refund extends Model {
     }
   }
   
+  String? get description {
+    return _description;
+  }
+  
+  TemporalDate? get dateOfPlanting {
+    return _dateOfPlanting;
+  }
+  
+  List<BucketPlant>? get buckets {
+    return _buckets;
+  }
+  
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -71,13 +83,15 @@ class Refund extends Model {
     return _updatedAt;
   }
   
-  const Refund._internal({required this.id, amount, required employeeID, createdAt, updatedAt}): _amount = amount, _employeeID = employeeID, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Plant._internal({required this.id, required name, description, dateOfPlanting, buckets, createdAt, updatedAt}): _name = name, _description = description, _dateOfPlanting = dateOfPlanting, _buckets = buckets, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Refund({String? id, double? amount, required String employeeID}) {
-    return Refund._internal(
+  factory Plant({String? id, required String name, String? description, TemporalDate? dateOfPlanting, List<BucketPlant>? buckets}) {
+    return Plant._internal(
       id: id == null ? UUID.getUUID() : id,
-      amount: amount,
-      employeeID: employeeID);
+      name: name,
+      description: description,
+      dateOfPlanting: dateOfPlanting,
+      buckets: buckets != null ? List<BucketPlant>.unmodifiable(buckets) : buckets);
   }
   
   bool equals(Object other) {
@@ -87,10 +101,12 @@ class Refund extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Refund &&
+    return other is Plant &&
       id == other.id &&
-      _amount == other._amount &&
-      _employeeID == other._employeeID;
+      _name == other._name &&
+      _description == other._description &&
+      _dateOfPlanting == other._dateOfPlanting &&
+      DeepCollectionEquality().equals(_buckets, other._buckets);
   }
   
   @override
@@ -100,10 +116,11 @@ class Refund extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Refund {");
+    buffer.write("Plant {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("amount=" + (_amount != null ? _amount!.toString() : "null") + ", ");
-    buffer.write("employeeID=" + "$_employeeID" + ", ");
+    buffer.write("name=" + "$_name" + ", ");
+    buffer.write("description=" + "$_description" + ", ");
+    buffer.write("dateOfPlanting=" + (_dateOfPlanting != null ? _dateOfPlanting!.format() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -111,35 +128,48 @@ class Refund extends Model {
     return buffer.toString();
   }
   
-  Refund copyWith({double? amount, String? employeeID}) {
-    return Refund._internal(
+  Plant copyWith({String? name, String? description, TemporalDate? dateOfPlanting, List<BucketPlant>? buckets}) {
+    return Plant._internal(
       id: id,
-      amount: amount ?? this.amount,
-      employeeID: employeeID ?? this.employeeID);
+      name: name ?? this.name,
+      description: description ?? this.description,
+      dateOfPlanting: dateOfPlanting ?? this.dateOfPlanting,
+      buckets: buckets ?? this.buckets);
   }
   
-  Refund.fromJson(Map<String, dynamic> json)  
+  Plant.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _amount = (json['amount'] as num?)?.toDouble(),
-      _employeeID = json['employeeID'],
+      _name = json['name'],
+      _description = json['description'],
+      _dateOfPlanting = json['dateOfPlanting'] != null ? TemporalDate.fromString(json['dateOfPlanting']) : null,
+      _buckets = json['buckets'] is List
+        ? (json['buckets'] as List)
+          .where((e) => e?['serializedData'] != null)
+          .map((e) => BucketPlant.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
+          .toList()
+        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'amount': _amount, 'employeeID': _employeeID, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'description': _description, 'dateOfPlanting': _dateOfPlanting?.format(), 'buckets': _buckets?.map((BucketPlant? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
-    'id': id, 'amount': _amount, 'employeeID': _employeeID, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+    'id': id, 'name': _name, 'description': _description, 'dateOfPlanting': _dateOfPlanting, 'buckets': _buckets, 'createdAt': _createdAt, 'updatedAt': _updatedAt
   };
 
-  static final QueryModelIdentifier<RefundModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<RefundModelIdentifier>();
+  static final QueryModelIdentifier<PlantModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<PlantModelIdentifier>();
   static final QueryField ID = QueryField(fieldName: "id");
-  static final QueryField AMOUNT = QueryField(fieldName: "amount");
-  static final QueryField EMPLOYEEID = QueryField(fieldName: "employeeID");
+  static final QueryField NAME = QueryField(fieldName: "name");
+  static final QueryField DESCRIPTION = QueryField(fieldName: "description");
+  static final QueryField DATEOFPLANTING = QueryField(fieldName: "dateOfPlanting");
+  static final QueryField BUCKETS = QueryField(
+    fieldName: "buckets",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'BucketPlant'));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Refund";
-    modelSchemaDefinition.pluralName = "Refunds";
+    modelSchemaDefinition.name = "Plant";
+    modelSchemaDefinition.pluralName = "Plants";
     
     modelSchemaDefinition.authRules = [
       AuthRule(
@@ -152,22 +182,31 @@ class Refund extends Model {
         ])
     ];
     
-    modelSchemaDefinition.indexes = [
-      ModelIndex(fields: const ["employeeID"], name: "byEmployee")
-    ];
-    
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Refund.AMOUNT,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.double)
+      key: Plant.NAME,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Refund.EMPLOYEEID,
-      isRequired: true,
+      key: Plant.DESCRIPTION,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Plant.DATEOFPLANTING,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.date)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
+      key: Plant.BUCKETS,
+      isRequired: false,
+      ofModelName: 'BucketPlant',
+      associatedKey: BucketPlant.PLANT
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -186,30 +225,30 @@ class Refund extends Model {
   });
 }
 
-class _RefundModelType extends ModelType<Refund> {
-  const _RefundModelType();
+class _PlantModelType extends ModelType<Plant> {
+  const _PlantModelType();
   
   @override
-  Refund fromJson(Map<String, dynamic> jsonData) {
-    return Refund.fromJson(jsonData);
+  Plant fromJson(Map<String, dynamic> jsonData) {
+    return Plant.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'Refund';
+    return 'Plant';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [Refund] in your schema.
+ * of [Plant] in your schema.
  */
 @immutable
-class RefundModelIdentifier implements ModelIdentifier<Refund> {
+class PlantModelIdentifier implements ModelIdentifier<Plant> {
   final String id;
 
-  /** Create an instance of RefundModelIdentifier using [id] the primary key. */
-  const RefundModelIdentifier({
+  /** Create an instance of PlantModelIdentifier using [id] the primary key. */
+  const PlantModelIdentifier({
     required this.id});
   
   @override
@@ -227,7 +266,7 @@ class RefundModelIdentifier implements ModelIdentifier<Refund> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'RefundModelIdentifier(id: $id)';
+  String toString() => 'PlantModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -235,7 +274,7 @@ class RefundModelIdentifier implements ModelIdentifier<Refund> {
       return true;
     }
     
-    return other is RefundModelIdentifier &&
+    return other is PlantModelIdentifier &&
       id == other.id;
   }
   

@@ -25,14 +25,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the Employee type in your schema. */
+/** This is an auto generated class representing the Bucket type in your schema. */
 @immutable
-class Employee extends Model {
-  static const classType = const _EmployeeModelType();
+class Bucket extends Model {
+  static const classType = const _BucketModelType();
   final String id;
-  final String? _first_name;
-  final String? _last_name;
-  final List<Refund>? _determine;
+  final int? _qr_code_id;
+  final String? _name;
+  final List<BucketPlant>? _contains;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -43,22 +43,40 @@ class Employee extends Model {
   @override
   String getId() => id;
   
-  EmployeeModelIdentifier get modelIdentifier {
-      return EmployeeModelIdentifier(
+  BucketModelIdentifier get modelIdentifier {
+      return BucketModelIdentifier(
         id: id
       );
   }
   
-  String? get first_name {
-    return _first_name;
+  int get qr_code_id {
+    try {
+      return _qr_code_id!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  String? get last_name {
-    return _last_name;
+  String get name {
+    try {
+      return _name!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  List<Refund>? get determine {
-    return _determine;
+  List<BucketPlant>? get contains {
+    return _contains;
   }
   
   TemporalDateTime? get createdAt {
@@ -69,14 +87,14 @@ class Employee extends Model {
     return _updatedAt;
   }
   
-  const Employee._internal({required this.id, first_name, last_name, determine, createdAt, updatedAt}): _first_name = first_name, _last_name = last_name, _determine = determine, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Bucket._internal({required this.id, required qr_code_id, required name, contains, createdAt, updatedAt}): _qr_code_id = qr_code_id, _name = name, _contains = contains, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Employee({String? id, String? first_name, String? last_name, List<Refund>? determine}) {
-    return Employee._internal(
+  factory Bucket({String? id, required int qr_code_id, required String name, List<BucketPlant>? contains}) {
+    return Bucket._internal(
       id: id == null ? UUID.getUUID() : id,
-      first_name: first_name,
-      last_name: last_name,
-      determine: determine != null ? List<Refund>.unmodifiable(determine) : determine);
+      qr_code_id: qr_code_id,
+      name: name,
+      contains: contains != null ? List<BucketPlant>.unmodifiable(contains) : contains);
   }
   
   bool equals(Object other) {
@@ -86,11 +104,11 @@ class Employee extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Employee &&
+    return other is Bucket &&
       id == other.id &&
-      _first_name == other._first_name &&
-      _last_name == other._last_name &&
-      DeepCollectionEquality().equals(_determine, other._determine);
+      _qr_code_id == other._qr_code_id &&
+      _name == other._name &&
+      DeepCollectionEquality().equals(_contains, other._contains);
   }
   
   @override
@@ -100,10 +118,10 @@ class Employee extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Employee {");
+    buffer.write("Bucket {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("first_name=" + "$_first_name" + ", ");
-    buffer.write("last_name=" + "$_last_name" + ", ");
+    buffer.write("qr_code_id=" + (_qr_code_id != null ? _qr_code_id!.toString() : "null") + ", ");
+    buffer.write("name=" + "$_name" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -111,45 +129,45 @@ class Employee extends Model {
     return buffer.toString();
   }
   
-  Employee copyWith({String? first_name, String? last_name, List<Refund>? determine}) {
-    return Employee._internal(
+  Bucket copyWith({int? qr_code_id, String? name, List<BucketPlant>? contains}) {
+    return Bucket._internal(
       id: id,
-      first_name: first_name ?? this.first_name,
-      last_name: last_name ?? this.last_name,
-      determine: determine ?? this.determine);
+      qr_code_id: qr_code_id ?? this.qr_code_id,
+      name: name ?? this.name,
+      contains: contains ?? this.contains);
   }
   
-  Employee.fromJson(Map<String, dynamic> json)  
+  Bucket.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _first_name = json['first_name'],
-      _last_name = json['last_name'],
-      _determine = json['determine'] is List
-        ? (json['determine'] as List)
+      _qr_code_id = (json['qr_code_id'] as num?)?.toInt(),
+      _name = json['name'],
+      _contains = json['contains'] is List
+        ? (json['contains'] as List)
           .where((e) => e?['serializedData'] != null)
-          .map((e) => Refund.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
+          .map((e) => BucketPlant.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'first_name': _first_name, 'last_name': _last_name, 'determine': _determine?.map((Refund? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'qr_code_id': _qr_code_id, 'name': _name, 'contains': _contains?.map((BucketPlant? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
-    'id': id, 'first_name': _first_name, 'last_name': _last_name, 'determine': _determine, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+    'id': id, 'qr_code_id': _qr_code_id, 'name': _name, 'contains': _contains, 'createdAt': _createdAt, 'updatedAt': _updatedAt
   };
 
-  static final QueryModelIdentifier<EmployeeModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<EmployeeModelIdentifier>();
+  static final QueryModelIdentifier<BucketModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<BucketModelIdentifier>();
   static final QueryField ID = QueryField(fieldName: "id");
-  static final QueryField FIRST_NAME = QueryField(fieldName: "first_name");
-  static final QueryField LAST_NAME = QueryField(fieldName: "last_name");
-  static final QueryField DETERMINE = QueryField(
-    fieldName: "determine",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'Refund'));
+  static final QueryField QR_CODE_ID = QueryField(fieldName: "qr_code_id");
+  static final QueryField NAME = QueryField(fieldName: "name");
+  static final QueryField CONTAINS = QueryField(
+    fieldName: "contains",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'BucketPlant'));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Employee";
-    modelSchemaDefinition.pluralName = "Employees";
+    modelSchemaDefinition.name = "Bucket";
+    modelSchemaDefinition.pluralName = "Buckets";
     
     modelSchemaDefinition.authRules = [
       AuthRule(
@@ -165,22 +183,22 @@ class Employee extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Employee.FIRST_NAME,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      key: Bucket.QR_CODE_ID,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Employee.LAST_NAME,
-      isRequired: false,
+      key: Bucket.NAME,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Employee.DETERMINE,
+      key: Bucket.CONTAINS,
       isRequired: false,
-      ofModelName: 'Refund',
-      associatedKey: Refund.EMPLOYEEID
+      ofModelName: 'BucketPlant',
+      associatedKey: BucketPlant.BUCKET
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -199,30 +217,30 @@ class Employee extends Model {
   });
 }
 
-class _EmployeeModelType extends ModelType<Employee> {
-  const _EmployeeModelType();
+class _BucketModelType extends ModelType<Bucket> {
+  const _BucketModelType();
   
   @override
-  Employee fromJson(Map<String, dynamic> jsonData) {
-    return Employee.fromJson(jsonData);
+  Bucket fromJson(Map<String, dynamic> jsonData) {
+    return Bucket.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'Employee';
+    return 'Bucket';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [Employee] in your schema.
+ * of [Bucket] in your schema.
  */
 @immutable
-class EmployeeModelIdentifier implements ModelIdentifier<Employee> {
+class BucketModelIdentifier implements ModelIdentifier<Bucket> {
   final String id;
 
-  /** Create an instance of EmployeeModelIdentifier using [id] the primary key. */
-  const EmployeeModelIdentifier({
+  /** Create an instance of BucketModelIdentifier using [id] the primary key. */
+  const BucketModelIdentifier({
     required this.id});
   
   @override
@@ -240,7 +258,7 @@ class EmployeeModelIdentifier implements ModelIdentifier<Employee> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'EmployeeModelIdentifier(id: $id)';
+  String toString() => 'BucketModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -248,7 +266,7 @@ class EmployeeModelIdentifier implements ModelIdentifier<Employee> {
       return true;
     }
     
-    return other is EmployeeModelIdentifier &&
+    return other is BucketModelIdentifier &&
       id == other.id;
   }
   

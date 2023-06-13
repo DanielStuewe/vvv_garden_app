@@ -1,12 +1,15 @@
-type Refund @model @auth(rules: [{allow: public}]) {
+type Bucket @model @auth(rules: [{allow: public}]) {
   id: ID!
-  amount: Float
-  employeeID: ID! @index(name: "byEmployee")
+  qr_code_id: Int!
+  name: String!
+  contains: [Plant] @manyToMany(relationName: "BucketPlant")
 }
 
-type Employee @model @auth(rules: [{allow: public}]) {
+type Plant @model @auth(rules: [{allow: public}]) {
   id: ID!
-  first_name: String
-  last_name: String
-  determine: [Refund] @hasMany(indexName: "byEmployee", fields: ["id"])
+  name: String!
+  description: String
+  dateOfPlanting: AWSDate
+  buckets: [Bucket] @manyToMany(relationName: "BucketPlant")
 }
+ 
