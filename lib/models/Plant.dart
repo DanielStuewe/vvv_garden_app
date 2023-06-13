@@ -31,11 +31,12 @@ class Plant extends Model {
   static const classType = const _PlantModelType();
   final String id;
   final String? _name;
-  final String? _description;
-  final TemporalDate? _dateOfPlanting;
-  final List<BucketPlant>? _buckets;
+  final List<TemporalDate>? _irrigations;
+  final List<PlantBucket>? _Buckets;
+  final PlantType? _hasPlantType;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
+  final String? _plantHasPlantTypeId;
 
   @override
   getInstanceType() => classType;
@@ -63,16 +64,25 @@ class Plant extends Model {
     }
   }
   
-  String? get description {
-    return _description;
+  List<TemporalDate>? get irrigations {
+    return _irrigations;
   }
   
-  TemporalDate? get dateOfPlanting {
-    return _dateOfPlanting;
+  List<PlantBucket>? get Buckets {
+    return _Buckets;
   }
   
-  List<BucketPlant>? get buckets {
-    return _buckets;
+  PlantType get hasPlantType {
+    try {
+      return _hasPlantType!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
   TemporalDateTime? get createdAt {
@@ -83,15 +93,29 @@ class Plant extends Model {
     return _updatedAt;
   }
   
-  const Plant._internal({required this.id, required name, description, dateOfPlanting, buckets, createdAt, updatedAt}): _name = name, _description = description, _dateOfPlanting = dateOfPlanting, _buckets = buckets, _createdAt = createdAt, _updatedAt = updatedAt;
+  String get plantHasPlantTypeId {
+    try {
+      return _plantHasPlantTypeId!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
   
-  factory Plant({String? id, required String name, String? description, TemporalDate? dateOfPlanting, List<BucketPlant>? buckets}) {
+  const Plant._internal({required this.id, required name, irrigations, Buckets, required hasPlantType, createdAt, updatedAt, required plantHasPlantTypeId}): _name = name, _irrigations = irrigations, _Buckets = Buckets, _hasPlantType = hasPlantType, _createdAt = createdAt, _updatedAt = updatedAt, _plantHasPlantTypeId = plantHasPlantTypeId;
+  
+  factory Plant({String? id, required String name, List<TemporalDate>? irrigations, List<PlantBucket>? Buckets, required PlantType hasPlantType, required String plantHasPlantTypeId}) {
     return Plant._internal(
       id: id == null ? UUID.getUUID() : id,
       name: name,
-      description: description,
-      dateOfPlanting: dateOfPlanting,
-      buckets: buckets != null ? List<BucketPlant>.unmodifiable(buckets) : buckets);
+      irrigations: irrigations != null ? List<TemporalDate>.unmodifiable(irrigations) : irrigations,
+      Buckets: Buckets != null ? List<PlantBucket>.unmodifiable(Buckets) : Buckets,
+      hasPlantType: hasPlantType,
+      plantHasPlantTypeId: plantHasPlantTypeId);
   }
   
   bool equals(Object other) {
@@ -104,9 +128,10 @@ class Plant extends Model {
     return other is Plant &&
       id == other.id &&
       _name == other._name &&
-      _description == other._description &&
-      _dateOfPlanting == other._dateOfPlanting &&
-      DeepCollectionEquality().equals(_buckets, other._buckets);
+      DeepCollectionEquality().equals(_irrigations, other._irrigations) &&
+      DeepCollectionEquality().equals(_Buckets, other._Buckets) &&
+      _hasPlantType == other._hasPlantType &&
+      _plantHasPlantTypeId == other._plantHasPlantTypeId;
   }
   
   @override
@@ -119,54 +144,61 @@ class Plant extends Model {
     buffer.write("Plant {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("name=" + "$_name" + ", ");
-    buffer.write("description=" + "$_description" + ", ");
-    buffer.write("dateOfPlanting=" + (_dateOfPlanting != null ? _dateOfPlanting!.format() : "null") + ", ");
+    buffer.write("irrigations=" + (_irrigations != null ? _irrigations!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null") + ", ");
+    buffer.write("plantHasPlantTypeId=" + "$_plantHasPlantTypeId");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Plant copyWith({String? name, String? description, TemporalDate? dateOfPlanting, List<BucketPlant>? buckets}) {
+  Plant copyWith({String? name, List<TemporalDate>? irrigations, List<PlantBucket>? Buckets, PlantType? hasPlantType, String? plantHasPlantTypeId}) {
     return Plant._internal(
       id: id,
       name: name ?? this.name,
-      description: description ?? this.description,
-      dateOfPlanting: dateOfPlanting ?? this.dateOfPlanting,
-      buckets: buckets ?? this.buckets);
+      irrigations: irrigations ?? this.irrigations,
+      Buckets: Buckets ?? this.Buckets,
+      hasPlantType: hasPlantType ?? this.hasPlantType,
+      plantHasPlantTypeId: plantHasPlantTypeId ?? this.plantHasPlantTypeId);
   }
   
   Plant.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _name = json['name'],
-      _description = json['description'],
-      _dateOfPlanting = json['dateOfPlanting'] != null ? TemporalDate.fromString(json['dateOfPlanting']) : null,
-      _buckets = json['buckets'] is List
-        ? (json['buckets'] as List)
+      _irrigations = (json['irrigations'] as List?)?.map((e) => TemporalDate.fromString(e)).toList(),
+      _Buckets = json['Buckets'] is List
+        ? (json['Buckets'] as List)
           .where((e) => e?['serializedData'] != null)
-          .map((e) => BucketPlant.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
+          .map((e) => PlantBucket.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
+      _hasPlantType = json['hasPlantType']?['serializedData'] != null
+        ? PlantType.fromJson(new Map<String, dynamic>.from(json['hasPlantType']['serializedData']))
+        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
+      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null,
+      _plantHasPlantTypeId = json['plantHasPlantTypeId'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'description': _description, 'dateOfPlanting': _dateOfPlanting?.format(), 'buckets': _buckets?.map((BucketPlant? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'irrigations': _irrigations?.map((e) => e.format()).toList(), 'Buckets': _Buckets?.map((PlantBucket? e) => e?.toJson()).toList(), 'hasPlantType': _hasPlantType?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format(), 'plantHasPlantTypeId': _plantHasPlantTypeId
   };
   
   Map<String, Object?> toMap() => {
-    'id': id, 'name': _name, 'description': _description, 'dateOfPlanting': _dateOfPlanting, 'buckets': _buckets, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+    'id': id, 'name': _name, 'irrigations': _irrigations, 'Buckets': _Buckets, 'hasPlantType': _hasPlantType, 'createdAt': _createdAt, 'updatedAt': _updatedAt, 'plantHasPlantTypeId': _plantHasPlantTypeId
   };
 
   static final QueryModelIdentifier<PlantModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<PlantModelIdentifier>();
   static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField NAME = QueryField(fieldName: "name");
-  static final QueryField DESCRIPTION = QueryField(fieldName: "description");
-  static final QueryField DATEOFPLANTING = QueryField(fieldName: "dateOfPlanting");
+  static final QueryField IRRIGATIONS = QueryField(fieldName: "irrigations");
   static final QueryField BUCKETS = QueryField(
-    fieldName: "buckets",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'BucketPlant'));
+    fieldName: "Buckets",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'PlantBucket'));
+  static final QueryField HASPLANTTYPE = QueryField(
+    fieldName: "hasPlantType",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'PlantType'));
+  static final QueryField PLANTHASPLANTTYPEID = QueryField(fieldName: "plantHasPlantTypeId");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Plant";
     modelSchemaDefinition.pluralName = "Plants";
@@ -191,22 +223,24 @@ class Plant extends Model {
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Plant.DESCRIPTION,
+      key: Plant.IRRIGATIONS,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Plant.DATEOFPLANTING,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.date)
+      isArray: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.collection, ofModelName: describeEnum(ModelFieldTypeEnum.date))
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
       key: Plant.BUCKETS,
-      isRequired: false,
-      ofModelName: 'BucketPlant',
-      associatedKey: BucketPlant.PLANT
+      isRequired: true,
+      ofModelName: 'PlantBucket',
+      associatedKey: PlantBucket.PLANT
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasOne(
+      key: Plant.HASPLANTTYPE,
+      isRequired: true,
+      ofModelName: 'PlantType',
+      associatedKey: PlantType.ID
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -221,6 +255,12 @@ class Plant extends Model {
       isRequired: false,
       isReadOnly: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Plant.PLANTHASPLANTTYPEID,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });
 }

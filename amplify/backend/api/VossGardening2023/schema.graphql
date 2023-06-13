@@ -1,15 +1,25 @@
+type Plant @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  irrigations: [AWSDate]
+  Buckets: [Bucket!] @manyToMany(relationName: "PlantBucket")
+  hasPlantType: PlantType! @hasOne
+}
+
 type Bucket @model @auth(rules: [{allow: public}]) {
   id: ID!
   qr_code_id: Int!
   name: String!
-  contains: [Plant] @manyToMany(relationName: "BucketPlant")
+  plants: [Plant] @manyToMany(relationName: "PlantBucket")
 }
 
-type Plant @model @auth(rules: [{allow: public}]) {
+type PlantType @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
-  description: String
-  dateOfPlanting: AWSDate
-  buckets: [Bucket] @manyToMany(relationName: "BucketPlant")
+  species: String!
+  description: String!
+  irrigationFrequencyInDays: Int!
+  harvestMonths: Int
+  bloomMonths: Int
+  edible: Boolean
 }
  

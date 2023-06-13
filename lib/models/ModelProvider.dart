@@ -21,18 +21,20 @@
 
 import 'package:amplify_core/amplify_core.dart';
 import 'Bucket.dart';
-import 'BucketPlant.dart';
 import 'Plant.dart';
+import 'PlantBucket.dart';
+import 'PlantType.dart';
 
 export 'Bucket.dart';
-export 'BucketPlant.dart';
 export 'Plant.dart';
+export 'PlantBucket.dart';
+export 'PlantType.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "20d2d1c3e988ca1e7ca474c75c449950";
+  String version = "ffc2098f886242a49977327a076991db";
   @override
-  List<ModelSchema> modelSchemas = [Bucket.schema, BucketPlant.schema, Plant.schema];
+  List<ModelSchema> modelSchemas = [Bucket.schema, Plant.schema, PlantBucket.schema, PlantType.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
   List<ModelSchema> customTypeSchemas = [];
@@ -43,10 +45,12 @@ class ModelProvider implements ModelProviderInterface {
     switch(modelName) {
       case "Bucket":
         return Bucket.classType;
-      case "BucketPlant":
-        return BucketPlant.classType;
       case "Plant":
         return Plant.classType;
+      case "PlantBucket":
+        return PlantBucket.classType;
+      case "PlantType":
+        return PlantType.classType;
       default:
         throw Exception("Failed to find model in model provider for model name: " + modelName);
     }

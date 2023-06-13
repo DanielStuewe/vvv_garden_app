@@ -21,18 +21,16 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the Bucket type in your schema. */
+/** This is an auto generated class representing the PlantBucket type in your schema. */
 @immutable
-class Bucket extends Model {
-  static const classType = const _BucketModelType();
+class PlantBucket extends Model {
+  static const classType = const _PlantBucketModelType();
   final String id;
-  final int? _qr_code_id;
-  final String? _name;
-  final List<PlantBucket>? _plants;
+  final Plant? _plant;
+  final Bucket? _bucket;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -43,15 +41,15 @@ class Bucket extends Model {
   @override
   String getId() => id;
   
-  BucketModelIdentifier get modelIdentifier {
-      return BucketModelIdentifier(
+  PlantBucketModelIdentifier get modelIdentifier {
+      return PlantBucketModelIdentifier(
         id: id
       );
   }
   
-  int get qr_code_id {
+  Plant get plant {
     try {
-      return _qr_code_id!;
+      return _plant!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -62,9 +60,9 @@ class Bucket extends Model {
     }
   }
   
-  String get name {
+  Bucket get bucket {
     try {
-      return _name!;
+      return _bucket!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -73,10 +71,6 @@ class Bucket extends Model {
           underlyingException: e.toString()
           );
     }
-  }
-  
-  List<PlantBucket>? get plants {
-    return _plants;
   }
   
   TemporalDateTime? get createdAt {
@@ -87,14 +81,13 @@ class Bucket extends Model {
     return _updatedAt;
   }
   
-  const Bucket._internal({required this.id, required qr_code_id, required name, plants, createdAt, updatedAt}): _qr_code_id = qr_code_id, _name = name, _plants = plants, _createdAt = createdAt, _updatedAt = updatedAt;
+  const PlantBucket._internal({required this.id, required plant, required bucket, createdAt, updatedAt}): _plant = plant, _bucket = bucket, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Bucket({String? id, required int qr_code_id, required String name, List<PlantBucket>? plants}) {
-    return Bucket._internal(
+  factory PlantBucket({String? id, required Plant plant, required Bucket bucket}) {
+    return PlantBucket._internal(
       id: id == null ? UUID.getUUID() : id,
-      qr_code_id: qr_code_id,
-      name: name,
-      plants: plants != null ? List<PlantBucket>.unmodifiable(plants) : plants);
+      plant: plant,
+      bucket: bucket);
   }
   
   bool equals(Object other) {
@@ -104,11 +97,10 @@ class Bucket extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Bucket &&
+    return other is PlantBucket &&
       id == other.id &&
-      _qr_code_id == other._qr_code_id &&
-      _name == other._name &&
-      DeepCollectionEquality().equals(_plants, other._plants);
+      _plant == other._plant &&
+      _bucket == other._bucket;
   }
   
   @override
@@ -118,10 +110,10 @@ class Bucket extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Bucket {");
+    buffer.write("PlantBucket {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("qr_code_id=" + (_qr_code_id != null ? _qr_code_id!.toString() : "null") + ", ");
-    buffer.write("name=" + "$_name" + ", ");
+    buffer.write("plant=" + (_plant != null ? _plant!.toString() : "null") + ", ");
+    buffer.write("bucket=" + (_bucket != null ? _bucket!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -129,76 +121,63 @@ class Bucket extends Model {
     return buffer.toString();
   }
   
-  Bucket copyWith({int? qr_code_id, String? name, List<PlantBucket>? plants}) {
-    return Bucket._internal(
+  PlantBucket copyWith({Plant? plant, Bucket? bucket}) {
+    return PlantBucket._internal(
       id: id,
-      qr_code_id: qr_code_id ?? this.qr_code_id,
-      name: name ?? this.name,
-      plants: plants ?? this.plants);
+      plant: plant ?? this.plant,
+      bucket: bucket ?? this.bucket);
   }
   
-  Bucket.fromJson(Map<String, dynamic> json)  
+  PlantBucket.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _qr_code_id = (json['qr_code_id'] as num?)?.toInt(),
-      _name = json['name'],
-      _plants = json['plants'] is List
-        ? (json['plants'] as List)
-          .where((e) => e?['serializedData'] != null)
-          .map((e) => PlantBucket.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
-          .toList()
+      _plant = json['plant']?['serializedData'] != null
+        ? Plant.fromJson(new Map<String, dynamic>.from(json['plant']['serializedData']))
+        : null,
+      _bucket = json['bucket']?['serializedData'] != null
+        ? Bucket.fromJson(new Map<String, dynamic>.from(json['bucket']['serializedData']))
         : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'qr_code_id': _qr_code_id, 'name': _name, 'plants': _plants?.map((PlantBucket? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'plant': _plant?.toJson(), 'bucket': _bucket?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
-    'id': id, 'qr_code_id': _qr_code_id, 'name': _name, 'plants': _plants, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+    'id': id, 'plant': _plant, 'bucket': _bucket, 'createdAt': _createdAt, 'updatedAt': _updatedAt
   };
 
-  static final QueryModelIdentifier<BucketModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<BucketModelIdentifier>();
+  static final QueryModelIdentifier<PlantBucketModelIdentifier> MODEL_IDENTIFIER = QueryModelIdentifier<PlantBucketModelIdentifier>();
   static final QueryField ID = QueryField(fieldName: "id");
-  static final QueryField QR_CODE_ID = QueryField(fieldName: "qr_code_id");
-  static final QueryField NAME = QueryField(fieldName: "name");
-  static final QueryField PLANTS = QueryField(
-    fieldName: "plants",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'PlantBucket'));
+  static final QueryField PLANT = QueryField(
+    fieldName: "plant",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'Plant'));
+  static final QueryField BUCKET = QueryField(
+    fieldName: "bucket",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: 'Bucket'));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Bucket";
-    modelSchemaDefinition.pluralName = "Buckets";
+    modelSchemaDefinition.name = "PlantBucket";
+    modelSchemaDefinition.pluralName = "PlantBuckets";
     
-    modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+    modelSchemaDefinition.indexes = [
+      ModelIndex(fields: const ["plantId"], name: "byPlant"),
+      ModelIndex(fields: const ["bucketId"], name: "byBucket")
     ];
     
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Bucket.QR_CODE_ID,
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: PlantBucket.PLANT,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
+      targetNames: ['plantId'],
+      ofModelName: 'Plant'
     ));
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Bucket.NAME,
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: PlantBucket.BUCKET,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Bucket.PLANTS,
-      isRequired: false,
-      ofModelName: 'PlantBucket',
-      associatedKey: PlantBucket.BUCKET
+      targetNames: ['bucketId'],
+      ofModelName: 'Bucket'
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -217,30 +196,30 @@ class Bucket extends Model {
   });
 }
 
-class _BucketModelType extends ModelType<Bucket> {
-  const _BucketModelType();
+class _PlantBucketModelType extends ModelType<PlantBucket> {
+  const _PlantBucketModelType();
   
   @override
-  Bucket fromJson(Map<String, dynamic> jsonData) {
-    return Bucket.fromJson(jsonData);
+  PlantBucket fromJson(Map<String, dynamic> jsonData) {
+    return PlantBucket.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'Bucket';
+    return 'PlantBucket';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [Bucket] in your schema.
+ * of [PlantBucket] in your schema.
  */
 @immutable
-class BucketModelIdentifier implements ModelIdentifier<Bucket> {
+class PlantBucketModelIdentifier implements ModelIdentifier<PlantBucket> {
   final String id;
 
-  /** Create an instance of BucketModelIdentifier using [id] the primary key. */
-  const BucketModelIdentifier({
+  /** Create an instance of PlantBucketModelIdentifier using [id] the primary key. */
+  const PlantBucketModelIdentifier({
     required this.id});
   
   @override
@@ -258,7 +237,7 @@ class BucketModelIdentifier implements ModelIdentifier<Bucket> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'BucketModelIdentifier(id: $id)';
+  String toString() => 'PlantBucketModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -266,7 +245,7 @@ class BucketModelIdentifier implements ModelIdentifier<Bucket> {
       return true;
     }
     
-    return other is BucketModelIdentifier &&
+    return other is PlantBucketModelIdentifier &&
       id == other.id;
   }
   
