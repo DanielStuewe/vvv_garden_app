@@ -1,8 +1,6 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:garden_test/models/Bucket.dart';
-import 'package:garden_test/models/BucketPlant.dart';
 
 import '../models/Plant.dart';
 
@@ -22,7 +20,7 @@ class PlantService {
     try {
       debugPrint("Request plants...");
       const graphQLDocument = '''query {
-  listPlants {
+  listPlants(filter: {_deleted: {ne: true}}) {
     items {
       id
       name
