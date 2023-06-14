@@ -1,19 +1,9 @@
-import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/Plant.dart';
 
 class PlantService {
-  // List<Plant> mockPlants = [
-  //   Plant(
-  //       id: '1',
-  //       name: 'Lisa',
-  //       description: 'Lisa is a very thirsty plant!',
-  //       dateOfPlanting: TemporalDate(DateTime(2023)),
-  //       buckets: [],
-  //   )
-  // ];
   Future<List<Plant?>> queryListItems() async {
     await Amplify.asyncConfig;
 

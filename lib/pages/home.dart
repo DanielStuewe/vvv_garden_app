@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:garden_test/services/plant_service.dart';
 import 'package:garden_test/widgets/combined_button.dart';
-import 'package:garden_test/widgets/plant_list.dart';
-import 'package:provider/provider.dart';
 
 
 class MyHomePage extends StatefulWidget {

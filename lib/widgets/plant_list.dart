@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:garden_test/models/Plant.dart';
 import 'package:garden_test/pages/detail.dart';
 import 'package:garden_test/services/plant_service.dart';
-import 'package:provider/provider.dart';
 
 class PlantList extends StatelessWidget {
   const PlantList({super.key});
