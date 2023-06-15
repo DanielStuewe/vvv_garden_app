@@ -21,7 +21,7 @@ class DetailPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 60, right: 8),
+        padding: const EdgeInsets.only(top: 18, left: 37, right: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
