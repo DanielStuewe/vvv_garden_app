@@ -8,7 +8,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var description = plant.hasPlantType.description;
+    final plantType = plant.hasPlantType;
     return Scaffold(
       appBar: AppBar(
         title: Text(plant.name),
@@ -19,13 +19,24 @@ class DetailPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 60, right: 8),
-        child: Column(children: [
-          Text('Species: ${plant.hasPlantType.species}'),
-          Text("Description: ${description ?? ''}"),
-          Text('Irrigation Frequency in Days: ${plant.hasPlantType.irrigationFrequencyInDays}'),
-          Text('Bloom Month: ${plant.hasPlantType.bloomMonths}'),
-          Text('Edible: ${plant.hasPlantType.edible}'),
-          Text('Created at: ${plant.hasPlantType.createdAt}'),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Species: ${plantType.species}'),
+          Flexible(
+            child: Text("Description: ${plantType.description}"),
+          ),
+          Text('Irrigation Frequency in Days: ${plantType.irrigationFrequencyInDays}'),
+          Text('Bloom Month: ${plantType.bloomMonths}'),
+          Row(
+            children: [
+              Icon(
+                plantType.edible ?? false
+                    ? Icons.spa_outlined
+                    : Icons.sick_outlined,
+              ),
+              Text('Edible: ${plantType.edible}'),
+            ],
+          ),
+          Text('Created at: ${plantType.createdAt}'),
         ]),
       ),
     );
