@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../models/Plant.dart';
 
 class PlantService {
-  Future<List<Plant?>> queryListItems() async {
+  Future<List<Plant>> queryListItems() async {
     await Amplify.asyncConfig;
 
     try {
@@ -44,7 +44,7 @@ class PlantService {
         safePrint('errors: ${response.errors}');
         return const [];
       }
-      return plants;
+      return plants.whereType<Plant>().toList();
     } on ApiException catch (e) {
       safePrint('Query failed: $e');
       return const [];
