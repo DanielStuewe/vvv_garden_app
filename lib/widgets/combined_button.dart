@@ -1,46 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:garden_test/widgets/plant_list.dart';
 
-class CombindedButton extends StatelessWidget {
+class CombinedButton extends StatelessWidget {
   final String text;
   final IconData icon;
+  final VoidCallback? onPressed;
   final double? padding;
 
-  const CombindedButton({
+  const CombinedButton({
     super.key,
     required this.text,
     required this.icon,
+    required this.onPressed,
     this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Our Plants'),
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
-                  body: const Center(
-                    child: Column(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(left: 60, right: 8),
-                            child: PlantList())
-                      ],
-                    ),
-                  ));
-            },
-          ),
-        );
-      },
+      onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
