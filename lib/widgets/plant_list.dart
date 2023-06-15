@@ -11,7 +11,8 @@ class PlantList extends StatelessWidget {
     final plantService = PlantService();
 
     return SizedBox(
-        height: 300,
+        height: 600,
+        width: 500,
         child: FutureBuilder(
             future: plantService.queryListItems(),
             initialData: const <Plant>[],
@@ -25,9 +26,10 @@ class PlantList extends StatelessWidget {
                 );
               }
               return ListView(children: [
-                for (var plant in (snapshot.data ?? []))
+                for (Plant plant in (snapshot.data ?? []))
                   ListTile(
-                    title: Text(plant.name),
+                    title: Text('${plant.name} (${plant.hasPlantType.species})'),
+                    leading: const Icon(Icons.forest_outlined, color: Colors.blueGrey),
                     onTap: () {
                       Navigator.push(
                         context,

@@ -17,16 +17,7 @@ class PlantListPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: const Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 60, right: 8),
-              child: PlantList(),
-            )
-          ],
-        ),
-      ),
+      body: const PlantList(),
     );
   }
 }
