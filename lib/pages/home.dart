@@ -11,7 +11,15 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Row(
+          children: [
+            const Icon(Icons.forest),
+            const SizedBox(
+              width: 32,
+            ),
+            Text(title)
+          ],
+        ),
       ),
       body: Center(
         child: Column(
