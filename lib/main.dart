@@ -41,9 +41,27 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ThemeData gardenTheme = ThemeData.from(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.lightGreen,
+        cardColor: Colors.lightGreen.shade100,
+        backgroundColor: Colors.lightGreen.shade50,
+      ),
+    ).copyWith(
+      iconTheme: const IconThemeData(
+          color: Colors.blueGrey
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.blueGrey,
+        ),
+      ),
+    );
+
     return MaterialApp(
       title: 'BotaniComm',
-      theme: ThemeData(primarySwatch: Colors.green, useMaterial3: true),
+      theme: gardenTheme,
       home: Provider(
         create: (context) => PlantService(),
         child: const MyHomePage(title: 'BotaniComm'),
