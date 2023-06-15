@@ -18,7 +18,11 @@ class PlantList extends StatelessWidget {
             builder:
                 (BuildContext context, AsyncSnapshot<List<Plant>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading Plants...");
+                return const SizedBox(
+                  height: 50.0,
+                  width: 50.0,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }
               return ListView(children: [
                 for (var plant in (snapshot.data ?? []))
