@@ -21,7 +21,7 @@ class DetailPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 18, left: 42, right: 8),
+        padding: const EdgeInsets.only(top: 18, left: 42, right: 36),
         child: ListView(
           children: [
             _buildLabelRow(
