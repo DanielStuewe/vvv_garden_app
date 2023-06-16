@@ -23,9 +23,13 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Divider(),
+            const SizedBox(height: 32),
+            const Expanded(
+              flex: 4,
+              child: Image(image: AssetImage('assets/ai_rooftop_garden.png')),
+            ),
+            const Spacer(),
             CombinedButton(
               icon: Icons.arrow_downward,
               text: 'Our Plants',
@@ -36,7 +40,8 @@ class MyHomePage extends StatelessWidget {
                   ),
                 );
               },
-            )
+            ),
+            const Spacer(),
           ],
         ),
       ),
